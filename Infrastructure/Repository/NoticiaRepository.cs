@@ -14,11 +14,11 @@ namespace Infrastructure.Repository
 {
     public class NoticiaRepository : GenericRepository<Noticia>, INoticia
     {
-        //protected readonly DbContextOptions<Context> _optionsBuilder;
-        //public NoticiaRepository()
-        //{
-        //    _optionsBuilder = new DbContextOptions<DbContext>();
-        //}
+        private readonly DbContextOptions<Context> _optionsBuilder;
+        public NoticiaRepository()
+        {
+            _optionsBuilder = new DbContextOptions<Context>();
+        }
 
         public async Task<List<Noticia>> ListarNoticias(Expression<Func<Noticia, bool>> exNoticia)
         {

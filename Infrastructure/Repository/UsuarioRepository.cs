@@ -2,6 +2,7 @@
 using Entidades.Entities;
 using Infrastructure.Configurations;
 using Infrastructure.Repository.Generics;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,11 @@ namespace Infrastructure.Repository
 {
     class UsuarioRepository : GenericRepository<ApplicationUser>, IUsuario
     {
+        private readonly DbContextOptions<Context> _optionsBuilder;
+        public UsuarioRepository()
+        {
+            _optionsBuilder = new DbContextOptions<Context>();
+        }
         public async Task<bool> AdicionaUsuario(string email, string senha, int idade, string celular)
         {
             try

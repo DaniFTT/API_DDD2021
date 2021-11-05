@@ -13,7 +13,7 @@ namespace Infrastructure.Repository.Generics
 {
     public class GenericRepository<T> : IGenerics<T>, IDisposable where T : class
     {
-        protected readonly DbContextOptions<Context> _optionsBuilder;
+        private readonly DbContextOptions<Context> _optionsBuilder;
         public GenericRepository()
         {
             _optionsBuilder = new DbContextOptions<Context>();
