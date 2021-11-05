@@ -51,5 +51,9 @@ namespace Domain.Services
         {
             return await _INoticia.ListarNoticias(n => n.Ativo);
         }
+        public async Task<List<Noticia>> ListarNoticiasInativas()
+        {
+            return await _INoticia.ListarNoticias(n => !n.Ativo);
+        }
     }
 }
