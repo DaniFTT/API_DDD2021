@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Infrastructure.Repository
 {
-    class UsuarioRepository : GenericRepository<ApplicationUser>, IUsuario
+    public class UsuarioRepository : GenericRepository<ApplicationUser>, IUsuario
     {
         private readonly DbContextOptions<Context> _optionsBuilder;
         public UsuarioRepository()
