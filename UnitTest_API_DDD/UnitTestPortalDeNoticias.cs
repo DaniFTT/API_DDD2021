@@ -1,7 +1,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Threading.Tasks;
 
-namespace UnitTest_API_DDD
+namespace Tests
 {
     [TestClass]
     public class UnitTestPortalDeNoticias
