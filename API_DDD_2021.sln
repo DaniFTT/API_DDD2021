@@ -25,7 +25,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebAPI", "WebAPI\WebAPI.csp
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "6 - Tests", "6 - Tests", "{ECCA7948-C2E2-43DB-8270-3FD8E8D0894C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTest_API_DDD", "UnitTest_API_DDD\UnitTest_API_DDD.csproj", "{570FB492-5A02-4BE9-A7C5-C936660A41C6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests", "UnitTest_API_DDD\Tests.csproj", "{570FB492-5A02-4BE9-A7C5-C936660A41C6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
