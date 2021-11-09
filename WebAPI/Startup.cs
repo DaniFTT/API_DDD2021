@@ -40,6 +40,8 @@ namespace WebAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors();
+
             //Conexao Banco de Dados
             services.AddDbContext<Context>(options =>
                 options.UseSqlServer(
@@ -115,6 +117,10 @@ namespace WebAPI
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            var url = "https://dominio.com";
+
+            app.UseCors(b => b.WithOrigins(url));
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
