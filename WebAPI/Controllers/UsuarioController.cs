@@ -16,7 +16,6 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using WebAPI.Models;
-using WebAPI.Token;
 
 namespace WebAPI.Controllers
 {
