@@ -41,7 +41,6 @@ namespace Domain.Services
             if (validarTitulo && validarInformacoes)
             {
                 noticia.DataAlteracao = DateTime.Now;
-                noticia.Ativo = true;
 
                 await _INoticia.Update(noticia);
             }
