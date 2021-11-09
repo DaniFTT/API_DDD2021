@@ -21,7 +21,7 @@ namespace Infrastructure.Repository.Generics
 
         public async Task Add(T Object)
         {
-            using (var data = new DbContext(_optionsBuilder))
+            using (var data = new Context(_optionsBuilder))
             {
                 await data.Set<T>().AddAsync(Object);
                 await data.SaveChangesAsync();
@@ -29,7 +29,7 @@ namespace Infrastructure.Repository.Generics
         }
         public async Task Update(T Object)
         {
-            using (var data = new DbContext(_optionsBuilder))
+            using (var data = new Context(_optionsBuilder))
             {
                 data.Set<T>().Update(Object);
                 await data.SaveChangesAsync();
@@ -38,7 +38,7 @@ namespace Infrastructure.Repository.Generics
 
         public async Task Delete(T Object)
         {
-            using (var data = new DbContext(_optionsBuilder))
+            using (var data = new Context(_optionsBuilder))
             {
                 data.Set<T>().Remove(Object);
                 await data.SaveChangesAsync();
@@ -47,7 +47,7 @@ namespace Infrastructure.Repository.Generics
 
         public async Task<T> GetById(int Id)
         {
-            using (var data = new DbContext(_optionsBuilder))
+            using (var data = new Context(_optionsBuilder))
             {
                 return await data.Set<T>().FindAsync(Id);
             }
@@ -55,7 +55,7 @@ namespace Infrastructure.Repository.Generics
 
         public async Task<List<T>> List()
         {
-            using (var data = new DbContext(_optionsBuilder))
+            using (var data = new Context(_optionsBuilder))
             {
                 return await data.Set<T>().AsNoTracking().ToListAsync();
             }
