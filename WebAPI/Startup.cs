@@ -22,6 +22,7 @@ using Microsoft.OpenApi.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using WebAPI.Token;
 
@@ -60,40 +61,54 @@ namespace WebAPI
             services.AddSingleton<IApplicationUsuario, ApplicationUsuario>();
 
             //Autenticacao
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer(option =>
+            services.AddAuthentication(opt => {
+                opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(options =>
+            {
+                options.TokenValidationParameters = new TokenValidationParameters
                 {
-                option.TokenValidationParameters = new TokenValidationParameters
-                {
-                   ValidateIssuer = false,
-                   ValidateAudience = false,
-                   ValidateLifetime = true,
-                   ValidateIssuerSigningKey = true,
-
-                   ValidIssuer = "Teste.Securiry.Bearer",
-                   ValidAudience = "Teste.Securiry.Bearer",
-                   IssuerSigningKey = JwtSecurityKey.Create("Secret_Key-12345678")
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    ValidIssuer = Configuration["Jwt:Issuer"],
+                    ValidAudience = Configuration["Jwt:Audience"],
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]))
                 };
-
-                option.Events = new JwtBearerEvents
-                {
-                   OnAuthenticationFailed = context =>
-                   {
-                       Console.WriteLine("OnAuthenticationFailed: " + context.Exception.Message);
-                       return Task.CompletedTask;
-                   },
-                   OnTokenValidated = context =>
-                   {
-                       Console.WriteLine("OnTokenValidated: " + context.SecurityToken);
-                       return Task.CompletedTask;
-                   }
-                };
-                });
+            });
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Portal de Noticias", Version = "v1" });
+
+                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
+                {
+                    Name = "Authorization",
+                    Type = SecuritySchemeType.ApiKey,
+                    Scheme = "Bearer",
+                    BearerFormat = "JWT",
+                    In = ParameterLocation.Header,
+                    Description = "JWT Authorization header using the Bearer scheme."
+                    + "\r\n\r\n Enter 'Bearer'[space] and then your token in the text input below."
+                    + "\r\n\r\nExample: \"Bearer 12345abcdef\"",
+                });
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+                    {
+                          new OpenApiSecurityScheme
+                          {
+                              Reference = new OpenApiReference
+                              {
+                                  Type = ReferenceType.SecurityScheme,
+                                  Id = "Bearer"
+                              }
+                          },
+                         new string[] {}
+                    }
+                });
             });
         }
 
@@ -107,7 +122,10 @@ namespace WebAPI
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "WebAPI v1"));
             }
 
+            app.UseHttpsRedirection();
             app.UseRouting();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 
